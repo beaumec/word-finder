@@ -1,23 +1,34 @@
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
+import axios from 'axios';
+import { Container } from '@mui/material';
+import Header from './components/Header';
+import Definition from './components/Definition/Definition';
 
 function App() {
+  const [meanings, setMeanings] = useState([]);
+  const [input, setInput] = useState("");
+
+  const dictionaryApiData = async () => {
+    try{
+      const data = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${input}`);    
+     setMeanings(data.data)
+    } catch{
+      }
+  }
+  console.log(meanings)
+
+  useEffect(() => {
+    dictionaryApiData()
+  },[input])
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{background:'#067597', height:'100vh'}}>
+      <Container maxWidth="md" style={{display:'flex',flexDirection:'column'}}>      
+        <Header  input={input} setInput={setInput}/>
+        <Definition meanings={meanings} word={input}/>
+      </Container>
     </div>
   );
 }
