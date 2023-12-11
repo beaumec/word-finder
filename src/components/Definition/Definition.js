@@ -7,7 +7,7 @@ const Definition = ({ meanings, word }) => {
       {word === "" ? (
         <span className="subTitle"> Start by typing a word in search</span>
       ) : (
-        meanings.map((mean,index) => {
+        meanings.map((mean, index) => {
           return mean.meanings.map((item) => {
             return item.definitions.map((def) => (
               <div key={index} className="singleMean">
